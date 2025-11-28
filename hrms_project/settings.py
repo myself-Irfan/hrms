@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from dotenv import load_dotenv
 from datetime import timedelta
@@ -31,18 +32,11 @@ INSTALLED_APPS = [
     # Third party
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_extensions',
+    'widget_tweaks',
     
     # Local apps
     'accounts',
-    'tenants',
-    'employees',
-    'attendance',
-    'leave',
-    'payroll',
-    'notices',
-    'expenses',
-    'reports',
-    'mobile_api',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +54,7 @@ ROOT_URLCONF = 'hrms_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -107,15 +101,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'Asia/Dhaka'
-
 USE_I18N = True
-
 USE_TZ = True
-
 STATIC_URL = 'static/'
-
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # REST Framework
@@ -146,3 +138,7 @@ DISABLED_FIELDS_TO_LOG = [
 
 LOGGING = get_logger_config()
 configure_structlog()
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/login/'
+LOGIN_URL = '/login/'

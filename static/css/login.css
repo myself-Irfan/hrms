@@ -1,0 +1,17 @@
+/* Card tweak only if needed for login */
+.login-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+/* Input tweaks specific for login (padding, border-radius) */
+.login-card .form-control {
+    border-radius: 2.5%;
+    padding: 0.75rem;
+}
+
+/* Button tweaks specific for login */
+.login-card .btn-primary {
+    padding: 0.75rem;
+    border-radius: 8px;
+}

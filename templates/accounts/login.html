@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}Login - iHRMS{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-3">
+        <div class="card p-4 login-card">
+            <div class="text-center mb-4">
+                <i class="bi bi-person-circle display-4 text-primary"></i>
+                <h3 class="mt-2">Sign In</h3>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        {{ form.username|add_class:"form-control" }}
+                    </div>
+                    {% if form.username.errors %}
+                        <div class="text-danger small">{{ form.username.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-key"></i></span>
+                        {{ form.password|add_class:"form-control" }}
+                    </div>
+                    {% if form.password.errors %}
+                        <div class="text-danger small">{{ form.password.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="bi bi-box-arrow-in-right"></i> Login
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

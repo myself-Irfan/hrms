@@ -3,9 +3,7 @@ import structlog
 from django.conf import settings
 
 
-
 def drop_unwanted_fields(_, __, event_dict):
-    """Remove sensitive/unneeded fields"""
     return {k: v for k, v in event_dict.items() if k not in settings.DISABLED_FIELDS_TO_LOG}
 
 
@@ -53,13 +51,11 @@ def get_logger_config():
             },
         },
         "loggers": {
-            # Only capture what YOU want from Django
             "django": {
                 "handlers": ["console"],
                 "level": settings.LOG_LEVEL,
                 "propagate": False,
             },
-            # Your app logger (name depends on project)
             "app": {
                 "handlers": ["console", "file"],
                 "level": settings.LOG_LEVEL,

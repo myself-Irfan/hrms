@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}Create User - iHRMS{% endblock %}
+
+{% block extra_css %}
+{% load static %}
+{% load widget_tweaks %}
+<link rel="stylesheet" href="{% static 'css/create_user.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card p-4 create-user-card">
+            <div class="text-center mb-4">
+                <i class="bi bi-person-plus-fill display-3 text-primary"></i>
+                <h2 class="mt-2">Create New User</h2>
+                <p class="text-muted mb-0">Add a new user to the system</p>
+            </div>
+
+            {% if form.non_field_errors %}
+                <div class="form-error mb-3">
+                    <strong><i class="bi bi-exclamation-triangle"></i> Error:</strong>
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <!-- Username -->
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    {{ form.username|add_class:"form-control" }}
+                </div>
+                {% if form.username.errors %}
+                    <div class="text-danger small mb-2">{{ form.username.errors }}</div>
+                {% endif %}
+
+                <!-- Email -->
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    {{ form.email|add_class:"form-control" }}
+                </div>
+                {% if form.email.errors %}
+                    <div class="text-danger small mb-2">{{ form.email.errors }}</div>
+                {% endif %}
+
+                <!-- User Group -->
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="bi bi-people"></i></span>
+                    {{ form.user_group|add_class:"form-select" }}
+                </div>
+                {% if form.user_group.errors %}
+                    <div class="text-danger small mb-2">{{ form.user_group.errors }}</div>
+                {% endif %}
+
+                <!-- Password -->
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    {{ form.password1|add_class:"form-control" }}
+                </div>
+                {% if form.password1.errors %}
+                    <div class="text-danger small mb-2">{{ form.password1.errors }}</div>
+                {% endif %}
+
+                <!-- Confirm Password -->
+                <div class="mb-4 input-group">
+                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                    {{ form.password2|add_class:"form-control" }}
+                </div>
+                {% if form.password2.errors %}
+                    <div class="text-danger small mb-2">{{ form.password2.errors }}</div>
+                {% endif %}
+
+                <!-- Buttons -->
+                <div class="row g-2">
+                    <div class="col-6">
+                        <div class="d-grid">
+                            <a href="{% url 'home' %}" class="btn btn-cancel btn-lg">
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-check-circle"></i> Create User
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

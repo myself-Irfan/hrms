@@ -1,0 +1,21 @@
+.create-user-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.form-error {
+    background: #fee2e2;
+    border-left: 4px solid #ef4444;
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.input-group-text {
+    background: rgba(0,0,0,0.05);
+    border-radius: 0.375rem 0 0 0.375rem;
+}
+
+.input-group .form-control,
+.input-group .form-select {
+    border-radius: 0 0.375rem 0.375rem 0;
+}
