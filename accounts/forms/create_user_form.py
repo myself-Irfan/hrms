@@ -31,19 +31,40 @@ class CreateUserForm(forms.Form):
             placeholder = f"Select {field.label}" if isinstance(field, forms.ChoiceField) else field.label
             field.widget.attrs.update({'placeholder': placeholder})
 
+        # Add help text showing available licenses
+        if self.current_user and not self.current_user.is_superuser:
+            try:
+                license_info = self.current_user.license_info
+                available = license_info.available_licenses()
+                self.fields['user_group'].help_text = f"Available licenses: {available}/{license_info.total_licenses}"
+            except:
+                pass
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise ValidationError("This username is already taken.")
+        return username
+
     def clean_user_group(self):
         group_name = self.cleaned_data['user_group']
         if not group_name:
             raise ValidationError("Please select a user group.")
         if group_name not in self.allowed_groups:
             raise ValidationError("You cannot assign this group.")
+
+        # Check license availability
+        can_create, error_msg = UserCreateService.check_license_availability(self.current_user, group_name)
+        if not can_create:
+            raise ValidationError(error_msg)
+
         return group_name
 
     def clean_license_count(self):
-        group_name = (self.cleaned_data.get('user_group') or "").lower()
+        group_name = self.cleaned_data.get('user_group')
         license_count = self.cleaned_data.get('license_count')
 
-        if group_name in [UserGroup.CLIENT_ADMIN.value, UserGroup.RESELLER_ADMIN.value] and not license_count:
+        if group_name in [UserGroup.CLIENT_ADMIN, UserGroup.RESELLER_ADMIN] and not license_count:
             raise ValidationError("License count is required for this user group.")
 
         return license_count
