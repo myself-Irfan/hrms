@@ -37,6 +37,24 @@
                     <div class="text-danger small mb-2">{{ form.username.errors }}</div>
                 {% endif %}
 
+                <!-- First Name -->
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    {{ form.first_name|add_class:"form-control" }}
+                </div>
+                {% if form.first_name.errors %}
+                    <div class="text-danger small mb-2">{{ form.first_name.errors }}</div>
+                {% endif %}
+
+                <!-- Last Name -->
+                <div class="mb-3 input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    {{ form.last_name|add_class:"form-control" }}
+                </div>
+                {% if form.last_name.errors %}
+                    <div class="text-danger small mb-2">{{ form.last_name.errors }}</div>
+                {% endif %}
+
                 <!-- Email -->
                 <div class="mb-3 input-group">
                     <span class="input-group-text"><i class="bi bi-envelope"></i></span>
@@ -53,6 +71,15 @@
                 </div>
                 {% if form.user_group.errors %}
                     <div class="text-danger small mb-2">{{ form.user_group.errors }}</div>
+                {% endif %}
+
+                <!-- License Count -->
+                <div id="license-count-field" class="mb-3 input-group d-none">
+                    <span class="input-group-text"><i class="bi bi-hash"></i></span>
+                    {{ form.license_count|add_class:"form-control" }}
+                </div>
+                {% if form.license_count.errors %}
+                    <div class="text-danger small mb-2">{{ form.license_count.errors }}</div>
                 {% endif %}
 
                 <!-- Password -->
@@ -95,4 +122,9 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'js/create_user.js' %}"></script>
 {% endblock %}
