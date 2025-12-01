@@ -1,0 +1,82 @@
+{% load user_permission_tags %}
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" role="navigation" aria-label="Main navigation">
+    <div class="container-fluid px-4">
+        <a class="navbar-brand d-flex align-items-center" href="{% if user.is_authenticated %}{% url 'home' %}{% else %}{% url 'login' %}{% endif %}">
+            <i class="bi bi-building-fill me-2"></i>
+            <span class="brand-text">iHRMS</span>
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{% url 'home' %}" aria-label="Go to home">
+                            <i class="bi bi-house-door-fill me-1"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+
+                    {% can_create_users as can_create %}
+                    {% if can_create %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle px-3" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-people-fill me-1"></i>
+                            <span>Manage Users</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'create_user' %}">
+                                    <i class="bi bi-person-plus-fill me-1"></i> Create User
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'list_users' %}">
+                                    <i class="bi bi-card-list me-1"></i> List Users
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% endif %}
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle px-3 user-menu" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="User menu">
+                            <i class="bi bi-person-circle me-1"></i>
+                            <span>{{ user.get_full_name|default:user.username }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="userDropdown">
+                            <li>
+                                <span class="dropdown-item-text small text-muted">
+                                    <i class="bi bi-envelope me-1"></i>{{ user.email|default:"No email" }}
+                                </span>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="post" action="{% url 'logout' %}" class="d-inline w-100">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="bi bi-box-arrow-right me-2"></i>Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link px-3" href="{% url 'login' %}">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>
+                            <span>Login</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

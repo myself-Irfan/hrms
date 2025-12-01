@@ -2,32 +2,15 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from accounts.enums import UserGroup
+from accounts.services import BaseUserService
 
 
-class CanCreateUserMixin(UserPassesTestMixin):
+class AdminAccessMixin(UserPassesTestMixin):
+    permission_denied_message = "You don't have permission to access this page."
+
     def test_func(self):
-        user = self.request.user
-        if not user.is_authenticated:
-            return False
-
-        if user.is_superuser:
-            return True
-
-        user_group = user.groups.first()
-        if not user_group:
-            return False
-
-        allowed_groups = [
-            UserGroup.SUPER_ADMIN,
-            UserGroup.RESELLER_ADMIN,
-            UserGroup.CLIENT_ADMIN
-        ]
-        return user_group.name in allowed_groups
+        return BaseUserService.can_access_admin_features(self.request.user)
 
     def handle_no_permission(self):
-        messages.error(
-            self.request,
-            "You don't have permission to create users."
-        )
+        messages.error(self.request, self.permission_denied_message)
         return redirect(reverse_lazy('home'))

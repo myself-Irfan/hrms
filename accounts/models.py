@@ -12,8 +12,8 @@ class ClientLicenseInfo(BaseModel):
     class Meta:
         db_table = 'client_license_info'
 
-    def available_licenses(self):
+    def available_licenses(self) -> int:
         return self.total_licenses - self.used_licenses
 
-    def can_create_user(self):
+    def can_create_user(self) -> bool:
         return self.available_licenses() > 0

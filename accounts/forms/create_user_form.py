@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from accounts.create_user_service import UserCreateService
+
+from accounts.services.user_create_service import UserCreateService
 from accounts.enums import UserGroup
 
 
