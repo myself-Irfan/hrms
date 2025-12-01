@@ -1,0 +1,12 @@
+.user-info-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 10px;
+    }
+    .form-card {
+        border-radius: 10px;
+    }
+    .readonly-field {
+        background-color: #e9ecef;
+        cursor: not-allowed;
+    }

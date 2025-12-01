@@ -200,9 +200,9 @@
                                         <button class="btn btn-outline-primary" title="View Details" data-bs-toggle="tooltip">
                                             <i class="bi bi-eye-fill"></i>
                                         </button>
-                                        <button class="btn btn-outline-warning" title="Edit" data-bs-toggle="tooltip">
+                                        <a href="{% url 'edit_user' user.pk %}" class="btn btn-outline-warning" title="Edit" data-bs-toggle="tooltip">
                                             <i class="bi bi-pencil-fill"></i>
-                                        </button>
+                                        </a>
                                         <button class="btn btn-outline-danger" title="Delete" data-bs-toggle="tooltip"
                                                 onclick="return confirm('Are you sure you want to delete {{ user.username }}?')">
                                             <i class="bi bi-trash-fill"></i>

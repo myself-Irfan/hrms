@@ -26,7 +26,6 @@ class UserListService(BaseUserService):
 
     @staticmethod
     def get_user_statistics(current_user: User):
-        """Get statistics about users visible to current_user"""
         users = UserListService.get_users_for_list(current_user)
 
         total_users = users.count()
